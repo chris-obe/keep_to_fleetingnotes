@@ -1,20 +1,22 @@
-# Keep to Markdown (because apparently I enjoy rewriting wheels)
+Here's a cleaned-up version that keeps the self-aware tone but delivers it with PM clarity and engineering competence:
 
-> A humble Python script that scrapes your exported Google Keep HTML files and turns them into Markdown notes—because I wanted automation, but evidently not enough to build a proper UI. Yet.
-> Bonus: the output plays nicely with Obsidian, Fleeting Notes, and whatever other Markdown playground you prefer.
+```markdown
+# Keep to Markdown
 
-## What is this?
+A Python script that converts exported Google Keep HTML files into clean Markdown notes. Works locally, outputs to standard `.md` format, and integrates smoothly with Obsidian, Fleeting Notes, or any Markdown-based system.
 
-This project is a glorified batch converter. Point it at the folder where Google Keep dumps its painfully verbose HTML files, and it spits out Markdown notes that are actually pleasant to read. Titles, timestamps, tags, content, attachments—the script does its best to wrangle everything into shape while I pretend this is a long-term maintainable solution.
+## What it does
 
-Spoiler: I fully intend to terraform this into a web-hosted app with an actual front end once I stop high-fiving myself for getting the command-line version to work.
+Processes Google Keep Takeout exports and generates properly formatted Markdown files. Handles titles, timestamps, labels, content blocks, and image references. File naming follows a consistent `YYYY-MM-DD - Title.md` pattern for easy sorting and search.
 
-## Features (if we squint)
+Currently command-line only. Web-based version with UI planned for later.
 
-- Converts Google Keep HTML exports into Markdown with sensible file names.
-- Preserves creation dates, tags, and even those awkward inline images.
-- Gives you control over how many files to process via a command-line argument.
-- Works without any external service because apparently I enjoy subjecting myself to local tooling.
+## Features
+
+- Converts Keep HTML exports to Markdown with preserved metadata
+- Maintains creation dates, labels, and inline image references
+- Configurable batch processing via CLI argument
+- No external services required—runs entirely locally
 
 ## Requirements
 
@@ -23,60 +25,58 @@ Spoiler: I fully intend to terraform this into a web-hosted app with an actual f
 - `html2text`
 - `python-dateutil`
 
-Install dependencies the low-tech way:
+Install dependencies:
 
 ```bash
 python -m venv venv
 source venv/bin/activate  # Windows: venv\Scripts\activate
-pip install -r requirements.txt  # or install the packages individually
+pip install -r requirements.txt
 ```
 
 ## Setup
 
-1. Clone this repository (or copy the script—you do you).
-2. Export your Google Keep notes from [takeout.google.com](https://takeout.google.com/).
-3. Extract the archive and find the folder containing all the `.html` files.
-4. Open `convert_keep_to_md.py` and replace the empty `input_dir` and `output_dir` strings with your actual paths.
+1. Export your Keep notes from [takeout.google.com](https://takeout.google.com)
+2. Extract the archive and locate the folder containing `.html` files
+3. Edit `convert_keep_to_md.py` and set your paths:
 
 ```python
-input_dir = ""   # e.g., "/path/to/Takeout/Keep"
-output_dir = ""  # e.g., "/path/to/MarkdownNotes"
+input_dir = ""   # Path to extracted Keep folder
+output_dir = ""  # Destination for Markdown files
 ```
 
-Yes, you have to edit the script. No, the irony is not lost on me.
+Path configuration is currently manual. Web UI will handle this automatically in future release.
 
 ## Usage
 
-Run the script from your terminal once the paths are in place:
-
 ```bash
-python convert_keep_to_md.py [optional_number_of_files]
+python convert_keep_to_md.py [optional_limit]
 ```
 
-- Omit the argument to convert everything.
-- Supply an integer (e.g., `25`) to process only the first N HTML files, in case you enjoy incremental progress.
+- Run without arguments to process all files
+- Pass an integer (e.g., `25`) to convert only the first N files
 
-Converted notes land in the output directory with filenames like `2024-05-01 - Grocery List.md`. Images are referenced relative to their original paths, so keep your attachments folder nearby unless you like broken links.
+Output files use format: `YYYY-MM-DD - Note Title.md`
 
-## Roadmap (a.k.a. future ambition)
+Image references point to original attachment paths—keep the attachments folder structure intact to maintain working links.
 
-- [ ] Build a web front end so normal humans can use this tool.
-- [ ] Add drag-and-drop uploads and real-time previews.
-- [ ] Maybe wrap it in a tiny API instead of playing folder roulette.
-- [ ] Polish the Markdown output until it looks like I knew what I was doing all along.
+## Roadmap
 
-If you wait long enough, there will be a browser-based version you can share with friends without apologizing first.
+- Web interface with drag-and-drop upload
+- Real-time conversion preview
+- API wrapper for programmatic access
+- Enhanced Markdown formatting options
 
-## Limitations
+## Known limitations
 
-- Only tested with standard Google Keep exports—your mileage may vary if you do something clever.
-- Requires manual path configuration (see: “front end coming soon-ish”).
-- Doesn’t deduplicate attachments, read your mind, or fix your note organization habits.
+- Tested with standard Keep exports only
+- Requires manual path configuration (temporary)
+- Does not deduplicate attachment files
+- Image paths assume original folder structure
 
 ## Contributing
 
-Issues and pull requests are welcome, especially if they remove technical debt I proudly introduced. If you're here for the upcoming front end, feel free to remind me that I promised one.
+Issues and PRs welcome. Focus areas: error handling improvements, export edge cases, and Markdown output refinement.
 
 ## License
 
-MIT. Mostly because copying and pasting this section is easier than thinking about it.
+MIT
