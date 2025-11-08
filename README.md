@@ -1,6 +1,3 @@
-Here's a cleaned-up version that keeps the self-aware tone but delivers it with PM clarity and engineering competence:
-
-```markdown
 # Keep to Markdown
 
 A Python script that converts exported Google Keep HTML files into clean Markdown notes. Works locally, outputs to standard `.md` format, and integrates smoothly with Obsidian, Fleeting Notes, or any Markdown-based system.
